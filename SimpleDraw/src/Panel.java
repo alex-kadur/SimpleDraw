@@ -20,6 +20,11 @@ public class Panel extends JPanel implements ActionListener {
     // Initial position of the pen
     int x = SCREEN_WIDTH / 2;
     int y = SCREEN_HEIGHT / 2;
+
+    // Previous position of the pen
+    int prevX = x;
+    int prevY = y;
+
     // Grid that represents a canvas
     // each cell is a unit of the grid and can be either empty or filled
     boolean[][] grid = new boolean[WIDTH_UNITS][HEIGHT_UNITS];
@@ -80,6 +85,9 @@ public class Panel extends JPanel implements ActionListener {
     }
 
     public void move() {
+
+        prevX = x;
+        prevY = y;
 
         switch (direction) {
             case 'U':
@@ -157,7 +165,9 @@ public class Panel extends JPanel implements ActionListener {
             move();
             checkCollisions();
             changeCellState(x / UNIT_SIZE, y / UNIT_SIZE);
+            repaint(prevX, prevY, UNIT_SIZE, UNIT_SIZE);
+            repaint(x, y, UNIT_SIZE, UNIT_SIZE);  
         }
-        repaint();  
+        
     }
 }
